@@ -1,0 +1,10 @@
+streamlit
+openpyxl
+plotly
+matplotlib
+rich>=10.14.0
+pandas
+numpy
+scikit-learn
+
+
