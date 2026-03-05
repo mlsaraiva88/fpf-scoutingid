@@ -3657,20 +3657,24 @@ else:
         with st.expander("🎚️ Ajustar Pesos das Métricas", expanded=False):
             st.info("💡 Defina a importância de cada métrica. Peso 1.0 = padrão, >1.0 = mais importante, <1.0 = menos importante")
             
+            # Remover métricas duplicadas para evitar erros de chaves duplicadas
+            unique_profile_metrics = list(dict.fromkeys(profile_metrics))
+
             # Organizar em colunas
             weights = {}
             num_cols = 3
             cols = st.columns(num_cols)
-            
-            for i, metric in enumerate(profile_metrics):
+
+            for i, metric in enumerate(unique_profile_metrics):
                 with cols[i % num_cols]:
+                    # Usar índice i na key para garantir unicidade
                     weights[metric] = st.slider(
                         metric,
                         min_value=0.0,
                         max_value=3.0,
                         value=1.0,
                         step=0.1,
-                        key=f"weight_{metric}_{position_profile}"
+                        key=f"weight_{metric}_{position_profile}_{i}"
                     )
             
             # Botão para resetar pesos
