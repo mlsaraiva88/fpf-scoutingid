@@ -2035,29 +2035,33 @@ else:
     # --- NEW TAB: Quadrant Analysis Scatter Plot ---
     def create_advanced_quadrant_plot(data, metric, highlight_player=None):
         """Cria gráfico de quadrantes avançado com recursos otimizados."""
-        
+
+        # Verificar se a métrica existe no DataFrame
+        if metric not in data.columns:
+            return None, None
+
         # Processar dados
         df_processed = data.groupby('Jogador').agg({
             'Clube ou Seleção': lambda x: ', '.join(x.unique()),
             'Posição': lambda x: ', '.join(x.astype(str).unique()),
             metric: 'mean'
         }).reset_index()
-        
+
         # Limpar dados
         df_processed = df_processed.dropna(subset=[metric])
         df_processed[metric] = pd.to_numeric(df_processed[metric], errors='coerce')
         df_processed = df_processed.dropna(subset=[metric])
-        
+
         if df_processed.empty or df_processed[metric].nunique() <= 1:
-            return None
-        
+            return None, None
+
         # Calcular ranking
         df_processed['Rank'] = df_processed[metric].rank(ascending=False, method='dense')
-        
+
         # Calcular medianas
         median_value = df_processed[metric].median()
         median_rank = df_processed['Rank'].median()
-        
+
         # Atribuir quadrantes
         def assign_quadrant(row):
             value = row[metric]
@@ -2070,9 +2074,9 @@ else:
                 return 'Alto Valor + Ranking Baixo'
             else:
                 return 'Baixo Valor + Bom Ranking'
-        
+
         df_processed['Quadrante'] = df_processed.apply(assign_quadrant, axis=1)
-        
+
         # Cores dos quadrantes
         color_map = {
             'Elite (Alto Valor + Bom Ranking)': '#4CAF50',
@@ -2080,7 +2084,7 @@ else:
             'Alto Valor + Ranking Baixo': '#FF9800',
             'Baixo Valor + Bom Ranking': '#2196F3'
         }
-        
+
         # Criar figura
         fig = px.scatter(
             df_processed,
@@ -2268,11 +2272,11 @@ else:
             position_profiles,
             key='profile_quadrant_adv'
         )
-        
+
         # Interface de seleção de métricas
         col1, col2, col3, col4 = st.columns(4)
         selected_metrics = []
-        
+
         # Métricas por categoria
         categories = [
             (col1, offensive_metrics, "⚔️ Ofensivas", 'off_quadrant_adv'),
@@ -2280,29 +2284,38 @@ else:
             (col3, passing_metrics, "🎯 Passe", 'pass_quadrant_adv'),
             (col4, general_metrics, "📊 Gerais", 'gen_quadrant_adv')
         ]
-        
+
         for col, metrics_list, label, key in categories:
             with col:
                 available = [m for m in metrics_list if m in all_metrics_columns]
-                
+
                 # Definir defaults baseado no perfil
                 defaults = []
                 if selected_profile != 'Manual (Selecionar Abaixo)':
                     profile_metrics = metrics_by_position_profile.get(selected_profile, [])
                     defaults = [m for m in profile_metrics if m in available]
-                
-                selected = st.multiselect(
-                    label,
-                    ['Todas'] + available,
-                    default=['Todas'] if set(defaults) == set(available) and available else defaults,
-                    key=key  # ← Keys estáticas aqui
-                )
-                
+
+                # Se há métricas padrão do perfil, usá-las; caso contrário, usar todas
+                if defaults:
+                    selected = st.multiselect(
+                        label,
+                        ['Todas'] + available,
+                        default=defaults,
+                        key=key
+                    )
+                else:
+                    selected = st.multiselect(
+                        label,
+                        ['Todas'] + available,
+                        default=['Todas'] if available else [],
+                        key=key
+                    )
+
                 if 'Todas' in selected:
                     selected_metrics.extend(available)
                 else:
                     selected_metrics.extend(selected)
-        
+
         selected_metrics = list(set(selected_metrics))  # Remove duplicates
         
         if not selected_metrics:
@@ -2712,7 +2725,7 @@ else:
             selected_off = st.multiselect(
                 "⚔️ Métricas Ofensivas",
                 ['Todas'] + available_offensive,
-                default=['Todas'] if set(default_offensive) == set(available_offensive) and available_offensive else default_offensive,
+                default=default_offensive if default_offensive else (['Todas'] if available_offensive else []),
                 key='similarity_offensive'
             )
             
@@ -2728,7 +2741,7 @@ else:
             selected_def = st.multiselect(
                 "🛡️ Métricas Defensivas",
                 ['Todas'] + available_defensive,
-                default=['Todas'] if set(default_defensive) == set(available_defensive) and available_defensive else default_defensive,
+                default=default_defensive if default_defensive else (['Todas'] if available_defensive else []),
                 key='similarity_defensive'
             )
             
@@ -2744,7 +2757,7 @@ else:
             selected_pass = st.multiselect(
                 "🎯 Métricas de Passe",
                 ['Todas'] + available_passing,
-                default=['Todas'] if set(default_passing) == set(available_passing) and available_passing else default_passing,
+                default=default_passing if default_passing else (['Todas'] if available_passing else []),
                 key='similarity_passing'
             )
             
@@ -2760,7 +2773,7 @@ else:
             selected_gen = st.multiselect(
                 "📊 Métricas Gerais",
                 ['Todas'] + available_general,
-                default=['Todas'] if set(default_general) == set(available_general) and available_general else default_general,
+                default=default_general if default_general else (['Todas'] if available_general else []),
                 key='similarity_general'
             )
             
