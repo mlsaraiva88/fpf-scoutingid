@@ -448,6 +448,59 @@ else:
                 df_normalized[col] = ((df_normalized[col] - min_val) / (max_val - min_val)) * 100
         return df_normalized
 
+    # --- Função para Extrair Clube do Jogo ---
+    def extract_club_from_game(game_string, default_clube="N/A"):
+        """
+        Extrai o nome do clube de uma string de jogo.
+        Formato esperado: "Team1 - Team2 Score" (ex: "Lecce - Internazionale 0:2")
+        Retorna o primeiro clube (equipa da casa) por padrão.
+        """
+        if pd.isna(game_string) or not isinstance(game_string, str):
+            return default_clube
+
+        try:
+            # Remove o resultado (números após o último espaço)
+            parts = game_string.split(' - ')
+            if len(parts) >= 2:
+                # Primeiro clube é o que vem antes do " - "
+                return parts[0].strip()
+        except:
+            pass
+
+        return default_clube
+
+    # --- Função para Obter Clube dos Últimos 5 Jogos ---
+    def get_most_common_club_from_last_games(player_data, num_games=5, col_data_jogo=None):
+        """
+        Obtém o clube mais frequente nos últimos N jogos do jogador.
+        """
+        if player_data.empty:
+            return "N/A"
+
+        # Ordenar por data se disponível
+        df_sorted = player_data.copy()
+        if col_data_jogo and col_data_jogo in df_sorted.columns:
+            df_sorted = df_sorted.sort_values(col_data_jogo, ascending=False)
+
+        # Pegar os últimos N jogos
+        last_games = df_sorted.head(num_games)
+
+        # Extrair clubes de cada jogo
+        clubs = []
+        for _, row in last_games.iterrows():
+            if 'Jogo' in row.index:
+                club = extract_club_from_game(row['Jogo'])
+                clubs.append(club)
+
+        # Encontrar o mais frequente
+        if clubs:
+            from collections import Counter
+            most_common = Counter(clubs).most_common(1)
+            if most_common:
+                return most_common[0][0]
+
+        return "N/A"
+
     # --- Metric Categorization ---
     # Identify columns from 'Ações Totais' onwards
     metrics_start_col_index = df.columns.get_loc('Ações Totais')
@@ -1557,103 +1610,35 @@ else:
     with tab2:
         # --- SCORE INDEX TAB ---
         st.subheader("📊 ScoreID - Índices de Desempenho (45-100)")
-    
-        metrics_by_position_profile = {
-            '🛡️ Full-back (Lateral)': [
-                'Corridas seguidas', 'Cruzamentos Certos', 'Duelos Defensivos Ganhos',
-                'Carrinhos Ganhos', 'Assistências para remate', 'Alívios', 'Duelos T',
-                'Intercepções', 'Duelos de bola livre Ganhos', 'Dribles Certos', 'xG',
-                'xA', 'Segundas assistências', 'Passes para terço final certos',
-                'Toques na área', 'Duelos ofensivos ganhos'
-            ],
-            '🧱 Centre-back (Defesa Central)': [
-                'Golos','Passes para a frente certos','Passes Longos Certos','Recuperações Meio Campo Adversário','Recuperações Totais','Duelos aéreos Ganhos','Duelos Defensivos Ganhos', 'Duelos de bola livre Ganhos', 'Intercepções',
-                'Alívios', 'Perdas Meio Campo', 'Passes Totais Certos', 'xG', 'Passes para terço final certos','Passes para a grande área precisos','Duelos ofensivos ganhos','Passes em profundidade certos'
-            ],
-            '🧲 Defensive Midfielder (Médio Defensivo)': [
-                'Golos', 'Assistências para remate', 'Dribles Certos', 'Remates à Baliza',
-                'Duelos de bola livre Ganhos', 'Assistências', 'Passes Totais Certos',
-                'Passes em profundidade certos', 'Carrinhos Ganhos', 'Intercepções', 'xG',
-                'xA', 'Segundas assistências', 'Passes para terço final certos',
-                'Toques na área', 'Duelos ofensivos ganhos', 'Duelos Defensivos Ganhos'
-            ],
-            '🧠 Central Midfielder (Médio Centro)': [
-                'Golos', 'Assistências para remate', 'Passes em profundidade certos',
-                'Duelos de bola livre Ganhos', 'Remates à Baliza', 'Duelos T',
-                'Assistências', 'Intercepções', 'Duelos Defensivos Ganhos', 'xG',
-                'xA', 'Segundas assistências', 'Passes para terço final certos',
-                'Toques na área', 'Duelos ofensivos ganhos', 'Recuperações Meio Campo Adversário'
-            ],
-            '🎯 Attacking Midfielder (Médio Ofensivo)': [
-                'Golos', 'Assistências para remate', 'Dribles Certos',
-                'Passes em profundidade certos', 'Remates à Baliza', 'Assistências',
-                'Cruzamentos Certos', 'Corridas seguidas', 'Duelos de bola livre Ganhos',
-                'Duelos T', 'xG', 'xA', 'Segundas assistências',
-                'Passes para terço final certos', 'Toques na área', 'Duelos ofensivos ganhos', 
-                'Duelos Defensivos Ganhos', 'Recuperações Meio Campo Adversário'
-            ],
-            '🪂 Winger (Extremo)': [
-                'Golos', 'Remates à Baliza', 'Assistências',
-                'Passes em profundidade certos', 'Cruzamentos Certos',
-                'Assistências para remate', 'Corridas seguidas', 'Dribles Certos',
-                'Duelos de bola livre Ganhos', 'xG', 'xA', 'Segundas assistências',
-                'Passes para terço final certos', 'Toques na área', 'Duelos ofensivos ganhos', 
-                'Duelos Defensivos Ganhos', 'Recuperações Meio Campo Adversário'
-            ],
-            '🎯 Forward (Avançado)': [
-                'Golos', 'Assistências para remate', 'Passes em profundidade certos',
-                'Assistências', 'Remates Totais', 'Remates à Baliza', 'Dribles Certos',
-                'Duelos Ganhos', 'Cruzamentos Certos', 'xG', 'xA', 'Segundas assistências',
-                'Passes para terço final certos', 'Toques na área', 'Duelos ofensivos ganhos', 
-                'Duelos Defensivos Ganhos', 'Recuperações Meio Campo Adversário'
-            ]
-        }
-    
+
+        # Usar o mesmo metrics_by_position_profile definido anteriormente
+        # (não redefinir para evitar inconsistências)
+
         # Filtrar métricas para só as que existem no DataFrame
         for pos, metrics in metrics_by_position_profile.items():
             metrics_by_position_profile[pos] = [m for m in metrics if m in all_metrics_columns]
-    
+
         profile_selected = st.selectbox(
             "Escolha o Perfil de Posição para calcular o ScoreID",
             list(metrics_by_position_profile.keys())
         )
-    
+
         # --- Agregação de dados por jogador ---
         metrics_to_aggregate = [m for m in all_metrics_columns if m in final_filtered_df.columns]
-    
+
         if not final_filtered_df.empty and 'Jogador' in final_filtered_df.columns:
             aggregated_df = final_filtered_df.groupby('Jogador')[metrics_to_aggregate].sum().reset_index()
         else:
             aggregated_df = pd.DataFrame(columns=['Jogador'] + all_metrics_columns)
-    
+
         player_highlight = st.selectbox(
             "Destacar Jogador na Tabela",
             ['Nenhum'] + aggregated_df['Jogador'].unique().tolist()
         )
-    
-        offensive_metrics = [
-            'Golos', 'Assistências', 'Remates Totais', 'Remates à Baliza', 'xG',
-            'Dribles T', 'Dribles Certos', 'Duelos ofensivos Totais', 'Duelos ofensivos ganhos',
-            'Toques na área', 'Assistências para remate', 'xA', 'Segundas assistências',
-            'Faltas sofridas','Duelos de bola livre Ganhos','Perdas Meio Campo'
-        ]
-    
-        defensive_metrics = [
-            'Intercepções', 'Recuperações Totais', 'Recuperações Meio Campo Adversário',
-            'Carrinhos', 'Carrinhos Ganhos', 'Alívios', 'Duelos Defensivos Totais',
-            'Duelos Defensivos Ganhos', 'Faltas','Duelos aéreos Ganhos'
-        ]
-    
-        passing_metrics = [
-            'Passes Totais', 'Passes Totais Certos', 'Passes Longos T', 'Passes Longos Certos',
-            'Cruzamentos T', 'Cruzamentos Certos', 'Passes em profundidade totais',
-            'Passes em profundidade certos', 'Passes para terço final totais',
-            'Passes para terço final certos', 'Passes para a grande área totais',
-            'Passes para a grande área precisos', 'Passes recebidos',
-            'Passes para a frente totais', 'Passes para a frente certos',
-            'Passes para trás totais', 'Passes para trás certos'
-        ]
-    
+
+        # Usar as métricas já definidas globalmente
+        # (offensive_metrics, defensive_metrics, passing_metrics, general_metrics já estão definidas)
+
         def calculate_aggregated_scores_fut_style(df, metrics_list, min_score=45, max_score=100):
             relevant_metrics = [m for m in metrics_list if m in df.columns]
             if not relevant_metrics:
@@ -4581,13 +4566,15 @@ else:
                     avg_actions = historical_data['Ações Totais'].mean()
                     geral_improvement = ((recent_actions - avg_actions) / (avg_actions + 0.1)) * 100
                 
-                # Extrair clube
-                clube = "N/A"
-                if 'Jogo' in recent_game.index:
-                    clube = extract_club_from_game(recent_game['Jogo'])
-                elif 'Clube ou Seleção' in recent_game.index:
-                    clube = recent_game['Clube ou Seleção']
-                
+                # Extrair clube - usar os últimos 5 jogos para encontrar o mais frequente
+                # Precisamos ter acesso a todos os dados do jogador, não apenas recent_game
+                player_all_data = df[df['Jogo'] == recent_game.get('Jogo')]
+                if player_all_data.empty:
+                    player_all_data = df[df['Jogador'] == player]
+
+                # Obter o clube mais frequente nos últimos 5 jogos
+                clube = get_most_common_club_from_last_games(player_all_data, num_games=5, col_data_jogo=col_data_jogo)
+
                 # Calcular score total com ênfase nas métricas do Position Profile
                 total_score = (
                     max(ofensiva_improvement, 0) * 0.3 +
@@ -4595,7 +4582,7 @@ else:
                     max(passe_improvement, 0) * 0.25 +
                     max(geral_improvement, 0) * 0.2
                 )
-                
+
                 all_players_ranking.append({
                     'Jogador': player,
                     'Clube': clube,
@@ -4608,8 +4595,8 @@ else:
                     'Golos_Ultimo': recent_game.get('Golos', 0),
                     'Assist_Ultimo': recent_game.get('Assistências', 0),
                     'Minutos_Ultimo': recent_game.get('Minutos', 0),
-                    'Amarelos_Ultimo': recent_game.get('Cartão amarelo', 0),
-                    'Vermelhos_Ultimo': recent_game.get('Cartão vermelho', 0)
+                    'Amarelos_Ultimo': recent_game.get('Cartões Amarelos', 0),
+                    'Vermelhos_Ultimo': recent_game.get('Cartões Vermelhos', 0)
                 })
             except Exception as e:
                 continue
