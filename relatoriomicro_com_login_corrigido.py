@@ -524,7 +524,7 @@ else:
     passing_metrics = [
         'Passes Totais', 'Passes Totais Certos', 'Passes Longos Totais', 'Passes Longos Certos',
         'Cruzamentos Totais', 'Cruzamentos Certos', 'Passes em Profundidade Totais',
-        'Passes em Profundidade Certos', 'Segundas Assistências', 'Passes para o Terço Final Totais',
+        'Passes em Profundidade Certos', 'xA', 'Segundas Assistências', 'Passes para o Terço Final Totais',
         'Passes para o Terço Final Certos', 'Passes para a Grande Área Totais',
         'Passes para a Grande Área Certos', 'Passes Recebidos',
         'Passes para o Frente Totais', 'Passes para o Frente Certos',
