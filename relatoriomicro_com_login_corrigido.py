@@ -514,9 +514,9 @@ else:
 
         'Golos', 'Assistências', 'Remates Totais', 'Remates à Baliza', 'xG',
 
-        'Dribles T', 'Dribles certos', 'Duelos ofensivos Totais', 'Duelos ofensivos ganhos',
+        'Dribles Totais', 'Dribles Certos', 'Duelos Ofensivos Totais', 'Duelos Ofensivos Ganhos',
 
-        'Toques na área', 'Assistências para remate', 'xA', 'Segundas assistências'
+        'Toques na Área', 'Assistências para Remate', 'xA', 'Segundas Assistências'
 
     ]
 
@@ -526,25 +526,25 @@ else:
 
         'Carrinhos', 'Carrinhos Ganhos', 'Alívios', 'Duelos Defensivos Totais',
 
-        'Duelos Defensivos Ganhos', 'Faltas', 'Duelos de bola livre Totais', 'Duelos de bola livre Ganhos'
+        'Duelos Defensivos Ganhos', 'Faltas', 'Duelos de Bola Parada Totais', 'Duelos de Bola Parada Ganhos'
 
     ]
 
     passing_metrics = [
 
-        'Passes Totais', 'Passes Totais Certos', 'Passes Longos T', 'Passes Longos Certos',
+        'Passes Totais', 'Passes Totais Certos', 'Passes Longos Totais', 'Passes Longos Certos',
 
-        'Cruzamentos T', 'Cruzamentos Certos', 'Passes em profundidade totais',
+        'Cruzamentos Totais', 'Cruzamentos Certos', 'Passes em Profundidade Totais',
 
-        'Passes em profundidade certos', 'Passes para terço final totais',
+        'Passes em Profundidade Certos', 'Passes para o Terço Final Totais',
 
-        'Passes para terço final certos', 'Passes para a grande área totais',
+        'Passes para o Terço Final Certos', 'Passes para a Grande Área Totais',
 
-        'Passes para a grande área precisos', 'Passes recebidos',
+        'Passes para a Grande Área Certos', 'Passes recebidos',
 
-        'Passes para a frente totais', 'Passes para a frente certos',
+        'Passes para o Frente Totais', 'Passes para o Frente Certos',
 
-        'Passes para trás totais', 'Passes para trás certos'
+        'Passes para Trás Totais', 'Passes para Trás Certos'
 
     ]
 
@@ -552,9 +552,9 @@ else:
 
         'Ações Totais', 'Ações Sucesso', 'Perdas Totais', 'Perdas Meio Campo',
 
-        'Duelos T', 'Duelos Ganhos', 'Cartão amarelo', 'Cartão vermelho',
+        'Duelos Totais', 'Duelos Ganhos', 'Cartão Amarelo', 'Cartão Vermelho',
 
-        'Foras de jogo', 'Corridas seguidas','Faltas sofridas', 'Faltas'
+        'Foras de Jogo', 'Corridas Seguidas','Faltas Sofridas', 'Faltas'
 
     ]
 
@@ -583,40 +583,44 @@ else:
     metrics_by_position_profile = {
         '🧱 Centre-back (Defesa Central)': [
             # Com bola
-            'Passes em profundidade certos',       # Passes progressivos (com sucesso)
-            'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
-            'Passes para terço final certos',   # Passes para último terço (com sucesso)
+            'Passes em Profundidade Certos',       # Passes progressivos (com sucesso)
+            'Passes para o Frente Certos',        # Passes inteligentes / chave (com sucesso)
+            'Passes para o Terço Final Certos',   # Passes para último terço (com sucesso)
             'Passes Longos Certos',                # Passes longos (com sucesso)
-            'Duelos ofensivos ganhos',             # Duelos ofensivos (com sucesso)
-            'Duelos de bola livre Totais',       # Duelos aéreos ofensivos
+            'Duelos Ofensivos Ganhos',             # Duelos ofensivos (com sucesso)
+            'Duelos de Bola Parada Totais',       # Duelos aéreos ofensivos
             # Sem bola
             'Carrinhos Ganhos',                   # Desarmes (com sucesso)
             'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
+            'Duelos Defensivos Ganhos',           # 1x1 defensivo (com sucesso)
+            'Duelos de Bola Parada Ganhos',       # Duelos na pressão (com sucesso)
+            'Duelos de Bola Parada Ganhos',       # Duelos aéreos (com sucesso)
             'Intercepções',                        # Interceções
             'Recuperações Meio Campo Adversário',  # Recuperações em meio-campo ofensivo (com sucesso)
             'Faltas'                              # Faltas
         ],
         '🛡️ Full-back (Lateral)': [
             # Com bola
-            'Passes em profundidade certos',       # Passes progressivos (com sucesso)
-            'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
-            'Passes para terço final certos',   # Passes para último terço (com sucesso)
-            'Corridas seguidas',                  # Corridas Seguidas (com sucesso)
-            'Dribles certos',                     # Dribles (com sucesso)
-            'Duelos ofensivos ganhos',            # Duelos ofensivos (com sucesso)
-            'Toques na área',                     # Toques dentro da área
+            'Passes em Profundidade Certos',       # Passes progressivos (com sucesso)
+            'Passes para o Frente Certos',        # Passes inteligentes / chave (com sucesso)
+            'Passes para o Terço Final Certos',   # Passes para último terço (com sucesso)
+            'Corridas Seguidas',                  # Corridas Seguidas (com sucesso)
+            'Dribles Certos',                     # Dribles (com sucesso)
+            'Duelos Ofensivos Ganhos',            # Duelos ofensivos (com sucesso)
+            'Toques na Área',                     # Toques dentro da área
             'xA',                                 # xA
             'Assistências',                       # Assistências
-            'Segundas assistências',              # Segunda assistência
-            'Assistências para remate',            # Assistência para remate
+            'Segundas Assistências',              # Segunda assistência
+            'Assistências para Remate',            # Assistência para remate
             'Cruzamentos Certos',                 # Cruzamentos (com sucesso)
             'Remates à Baliza',                   # Remates (na baliza)
             'xG',                                 # xG
             # Sem bola
             'Carrinhos Ganhos',                   # Desarmes (com sucesso)
             'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
+            'Duelos Defensivos Ganhos',           # 1x1 defensivo (com sucesso)
+            'Duelos de Bola Parada Ganhos',       # Duelos na pressão (com sucesso)
+            'Duelos de Bola Parada Ganhos',       # Duelos aéreos (com sucesso)
             'Recuperações Meio Campo Adversário', # Recuperações em meio-campo ofensivo
             'Intercepções',                        # Interceções
             'Faltas'                              # Faltas
@@ -625,40 +629,40 @@ else:
             # Com bola
             'Perdas Totais',                      # Perdas de bola
             'Passes Totais Certos',               # Passes (com sucesso)
-            'Passes em profundidade certos',      # Passes progressivos (com sucesso)
-            'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
+            'Passes em Profundidade Certos',      # Passes progressivos (com sucesso)
+            'Passes para o Frente Certos',        # Passes inteligentes / chave (com sucesso)
             'Passes Longos Certos',               # Passes longos (com sucesso)
-            'Passes para terço final certos',   # Passes no último terço (com sucesso)
-            'Duelos ofensivos ganhos',            # Duelos ofensivos (com sucesso)
-            'Dribles certos',                     # Dribles (com sucesso)
-            'Segundas assistências',              # Segunda assistência
+            'Passes para o Terço Final Certos',   # Passes no último terço (com sucesso)
+            'Duelos Ofensivos Ganhos',            # Duelos ofensivos (com sucesso)
+            'Dribles Certos',                     # Dribles (com sucesso)
+            'Segundas Assistências',              # Segunda assistência
             # Sem bola
             'Recuperações Meio Campo Adversário', # Recuperações de bola no meio-campo ofensivo
             'Recuperações Totais',                # Recuperações Totais
             'Carrinhos Ganhos',                   # Desarmes (com sucesso)
             'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
-            'Duelos de bola livre Ganhos',       # Duelos aéreos (com sucesso)
+            'Duelos de Bola Parada Ganhos',       # Duelos na pressão (com sucesso)
+            'Duelos de Bola Parada Ganhos',       # Duelos aéreos (com sucesso)
             'Intercepções',                        # Interceções
             'Faltas'                              # Faltas por desarme
         ],
         '🧠 Central Midfielder (Médio Centro)': [
             # Com bola
             'Perdas Totais',                      # Perdas de bola
-            'Corridas seguidas',                  # Corridas Seguidas
+            'Corridas Seguidas',                  # Corridas Seguidas
             'Passes Totais Certos',               # Passes (com sucesso)
-            'Passes em profundidade certos',      # Passes progressivos (com sucesso)
-            'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
+            'Passes em Profundidade Certos',      # Passes progressivos (com sucesso)
+            'Passes para o Frente Certos',        # Passes inteligentes / chave (com sucesso)
             'Passes Longos Certos',               # Passes longos (com sucesso)
-            'Passes para terço final certos',   # Passes no último terço (com sucesso)
-            'Duelos ofensivos ganhos',            # Duelos ofensivos (com sucesso)
-            'Dribles certos',                     # Dribles (com sucesso)
+            'Passes para o Terço Final Certos',   # Passes no último terço (com sucesso)
+            'Duelos Ofensivos Ganhos',            # Duelos ofensivos (com sucesso)
+            'Dribles Certos',                     # Dribles (com sucesso)
             'Assistências',                       # Assistências
-            'Segundas assistências',              # Segunda assistência
-            'Assistências para remate',           # Assistência para remate
+            'Segundas Assistências',              # Segunda assistência
+            'Assistências para Remate',           # Assistência para remate
             'xA',                                 # xA
             'Remates à Baliza',                   # Remates (à baliza)
-            'Toques na área',                     # Toques na Área
+            'Toques na Área',                     # Toques na Área
             'xG',                                 # xG
             'Golos',                              # Golos
             # Sem bola
@@ -666,25 +670,26 @@ else:
             'Recuperações Totais',                # Recuperações Totais
             'Carrinhos Ganhos',                   # Desarmes (com sucesso)
             'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
-            'Duelos de bola livre Ganhos',       # Duelos aéreo (com sucesso)
+            'Duelos de Bola Parada Ganhos',       # Duelos na pressão (com sucesso)
+            'Duelos de Bola Parada Ganhos',       # Duelos aéreo (com sucesso)
             'Intercepções',                        # Interceções
             'Faltas'                              # Faltas por desarme
         ],
         '🎯 Attacking Midfielder (Médio Ofensivo)': [
             # Com bola
             'Perdas Totais',                      # Perdas de bola
-            'Corridas seguidas',                  # Corridas Seguidas (com sucesso)
-            'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
-            'Passes para terço final certos',   # Passes no último terço (com sucesso)
-            'Passes para a grande área certos',   # Passes para a grande área (com sucesso)
-            'Faltas sofridas',                    # Faltas Sofridas
-            'Duelos ofensivos ganhos',            # Duelos ofensivos (com sucesso)
-            'Dribles certos',                     # Dribles (com sucesso)
-            'Toques na área',                     # Toques dentro da área
-            'Assistências para remate',           # Assistência para remate na baliza
+            'Corridas Seguidas',                  # Corridas Seguidas (com sucesso)
+            'Passes para o Frente Certos',        # Passes inteligentes / chave (com sucesso)
+            'Passes para o Terço Final Certos',   # Passes no último terço (com sucesso)
+            'Passes para a Grande Área Certos',   # Passes para a grande área (com sucesso)
+            'Faltas Sofridas',                    # Faltas Sofridas
+            'Duelos Ofensivos Ganhos',            # Duelos ofensivos (com sucesso)
+            'Dribles Certos',                     # Dribles (com sucesso)
+            'Toques na Área',                     # Toques dentro da área
+            'Assistências para Remate',           # Assistência para remate na baliza
             'Assistências',                       # Assistências
-            'Segundas assistências',              # Segunda assistência
+            'Segundas Assistências',              # Segunda assistência
+            'Assistências para Remate',           # Assistência para remate
             'Remates à Baliza',                   # Remates (na baliza)
             'xA',                                 # xA
             'xG',                                 # xG
@@ -693,25 +698,25 @@ else:
             'Recuperações Meio Campo Adversário', # Recuperações de bola no meio-campo ofensivo
             'Recuperações Totais',                # Recuperações Totais
             'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
+            'Duelos de Bola Parada Ganhos',       # Duelos na pressão (com sucesso)
             'Intercepções',                        # Interceções
             'Faltas'                              # Faltas
         ],
         '🪂 Winger (Extremo)': [
             # Com bola
-            'Corridas seguidas',                  # Corridas Seguidas (com sucesso)
-            'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
-            'Passes para a grande área certos',   # Passes para a grande área (com sucesso)
-            'Passes para terço final certos',   # Passes no último terço (com sucesso)
-            'Faltas sofridas',                    # Faltas Sofridas
-            'Duelos ofensivos ganhos',            # Duelos ofensivos (com sucesso)
-            'Dribles certos',                     # Dribles (com sucesso)
-            'Toques na área',                     # Toques dentro da área
-            'Assistências para remate',           # Assistência para remate na baliza
+            'Corridas Seguidas',                  # Corridas Seguidas (com sucesso)
+            'Passes para o Frente Certos',        # Passes inteligentes / chave (com sucesso)
+            'Passes para a Grande Área Certos',   # Passes para a grande área (com sucesso)
+            'Passes para o Terço Final Certos',   # Passes no último terço (com sucesso)
+            'Faltas Sofridas',                    # Faltas Sofridas
+            'Duelos Ofensivos Ganhos',            # Duelos ofensivos (com sucesso)
+            'Dribles Certos',                     # Dribles (com sucesso)
+            'Toques na Área',                     # Toques dentro da área
+            'Assistências para Remate',           # Assistência para remate na baliza
             'Assistências',                       # Assistências
             'Cruzamentos Certos',                 # Cruzamentos (com sucesso)
-            'Segundas assistências',              # Segunda assistência
-            'Assistências para remate',           # Assistência para remate
+            'Segundas Assistências',              # Segunda assistência
+            'Assistências para Remate',           # Assistência para remate
             'Remates à Baliza',                   # Remates (na baliza)
             'xA',                                 # xA
             'xG',                                 # xG
@@ -720,22 +725,22 @@ else:
             'Recuperações Meio Campo Adversário', # Recuperações de bola no meio-campo ofensivo
             'Recuperações Totais',                # Recuperações Totais
             'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
+            'Duelos de Bola Parada Ganhos',       # Duelos na pressão (com sucesso)
             'Intercepções',                        # Interceções
             'Faltas'                              # Faltas
         ],
         '🎯 Striker (Avançado)': [
             # Com bola
             'Passes Totais Certos',               # Passes (com sucesso)
-            'Corridas seguidas',                  # Corridas Seguidas
+            'Corridas Seguidas',                  # Corridas Seguidas
             'Faltas Sofridas',                    # Faltas Sofridas
-            'Duelos ofensivos ganhos',            # Duelos ofensivos (com sucesso)
-            'Toques na área',                     # Toques dentro da área
-            'Assistências para remate',           # Assistência para remate na baliza
+            'Duelos Ofensivos Ganhos',            # Duelos ofensivos (com sucesso)
+            'Toques na Área',                     # Toques dentro da área
+            'Assistências para Remate',           # Assistência para remate na baliza
             'Assistências',                       # Assistências
-            'Assistências para remate',           # Assistência para remate
+            'Assistências para Remate',           # Assistência para remate
             'Remates à Baliza',                   # Remates (na baliza)
-            'Duelos de bola livre Totais',       # Duelos aéreos ofensivos
+            'Duelos de Bola Parada Totais',       # Duelos aéreos ofensivos
             'xA',                                 # xA
             'xG',                                 # xG
             'Golos',                              # Golos
@@ -743,7 +748,7 @@ else:
             'Recuperações Meio Campo Adversário', # Recuperações de bola no meio-campo ofensivo
             'Recuperações Totais',                # Recuperações Totais
             'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos de bola livre Ganhos',      # Duelos na pressão (com sucesso)
+            'Duelos de Bola Parada Ganhos',      # Duelos na pressão (com sucesso)
             'Intercepções',                        # Interceções
             'Faltas'                              # Faltas
         ]
@@ -3500,7 +3505,7 @@ else:
         
         def categorize_metric(metric_name):
             """Categoriza uma métrica com base no seu nome."""
-            offensive_keywords = ['Golos', 'Assistências', 'Remates', 'Dribles', 'Cruzamentos', 'Toques na área', 'xG', 'xA']
+            offensive_keywords = ['Golos', 'Assistências', 'Remates', 'Dribles', 'Cruzamentos', 'Toques na Área', 'xG', 'xA']
             defensive_keywords = ['Desarmes', 'Intercepções', 'Bloqueios', 'Carrinhos', 'Alívios', 'Duelos Defensivos', 'Recuperações']
             passing_keywords = ['Passes', 'Progressivos', 'Chave', 'Longos', 'profundidade', 'terço final']
             
