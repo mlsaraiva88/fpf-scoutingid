@@ -544,13 +544,13 @@ else:
 
         'Passes para o Frente Totais', 'Passes para o Frente Certos',
 
-        'Passes para Trás Totais', 'Passes para Trás Certos'
+        'Passes para Trás Totais', 'Passes para Trás Certos', 'Pontapés de Baliza Curtos', 'Pontapés de Baliza Longos'
 
     ]
 
     general_metrics = [
 
-        'Ações Totais', 'Ações Sucesso', 'Perdas Totais', 'Perdas Meio Campo',
+        'Ações Totais', 'Ações Sucesso', 'Perdas Totais', 'Perdas Meio Campo', 'Duelos Aéreos Totais', 'Duelos Aéreos Ganhos'
 
         'Duelos Totais', 'Duelos Ganhos', 'Cartão Amarelo', 'Cartão Vermelho',
 
@@ -588,7 +588,7 @@ else:
             'Passes para o Terço Final Certos',   # Passes para último terço (com sucesso)
             'Passes Longos Certos',                # Passes longos (com sucesso)
             'Duelos Ofensivos Ganhos',             # Duelos ofensivos (com sucesso)
-            'Duelos de Bola Parada Totais',       # Duelos aéreos ofensivos
+            'Duelos Aéreos Ganhos',       # Duelos aéreos ofensivos
             # Sem bola
             'Carrinhos Ganhos',                   # Desarmes (com sucesso)
             'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
@@ -607,6 +607,7 @@ else:
             'Corridas Seguidas',                  # Corridas Seguidas (com sucesso)
             'Dribles Certos',                     # Dribles (com sucesso)
             'Duelos Ofensivos Ganhos',            # Duelos ofensivos (com sucesso)
+            'Duelos Aéreos Ganhos',
             'Toques na Área',                     # Toques dentro da área
             'xA',                                 # xA
             'Assistências',                       # Assistências
@@ -633,7 +634,8 @@ else:
             'Passes para o Frente Certos',        # Passes inteligentes / chave (com sucesso)
             'Passes Longos Certos',               # Passes longos (com sucesso)
             'Passes para o Terço Final Certos',   # Passes no último terço (com sucesso)
-            'Duelos Ofensivos Ganhos',            # Duelos ofensivos (com sucesso)
+            'Duelos Ofensivos Ganhos',
+            'Duelos Aéreos Ganhos',                # Duelos ofensivos (com sucesso)
             'Dribles Certos',                     # Dribles (com sucesso)
             'Segundas Assistências',              # Segunda assistência
             # Sem bola
@@ -655,7 +657,8 @@ else:
             'Passes para o Frente Certos',        # Passes inteligentes / chave (com sucesso)
             'Passes Longos Certos',               # Passes longos (com sucesso)
             'Passes para o Terço Final Certos',   # Passes no último terço (com sucesso)
-            'Duelos Ofensivos Ganhos',            # Duelos ofensivos (com sucesso)
+            'Duelos Ofensivos Ganhos',
+            'Duelos Aéreos Ganhos',                # Duelos ofensivos (com sucesso)
             'Dribles Certos',                     # Dribles (com sucesso)
             'Assistências',                       # Assistências
             'Segundas Assistências',              # Segunda assistência
