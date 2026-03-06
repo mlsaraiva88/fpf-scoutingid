@@ -588,7 +588,7 @@ else:
             'Passes para o Terço Final Certos',   # Passes para último terço (com sucesso)
             'Passes Longos Certos',                # Passes longos (com sucesso)
             'Duelos Ofensivos Ganhos',             # Duelos ofensivos (com sucesso)
-            'Duelos Aéreos Ganhos',       # Duelos aéreos ofensivos
+            'Duelos Aéreos Ganhos',               # Duelos aéreos ofensivos
             # Sem bola
             'Carrinhos Ganhos',                   # Desarmes (com sucesso)
             'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
