@@ -592,9 +592,7 @@ else:
             # Sem bola
             'Carrinhos Ganhos',                   # Desarmes (com sucesso)
             'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos Defensivos Ganhos',           # 1x1 defensivo (com sucesso)
             'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
-            'Duelos de bola livre Ganhos',       # Duelos aéreos (com sucesso)
             'Intercepções',                        # Interceções
             'Recuperações Meio Campo Adversário',  # Recuperações em meio-campo ofensivo (com sucesso)
             'Faltas'                              # Faltas
@@ -618,9 +616,7 @@ else:
             # Sem bola
             'Carrinhos Ganhos',                   # Desarmes (com sucesso)
             'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos Defensivos Ganhos',           # 1x1 defensivo (com sucesso)
             'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
-            'Duelos de bola livre Ganhos',       # Duelos aéreos (com sucesso)
             'Recuperações Meio Campo Adversário', # Recuperações em meio-campo ofensivo
             'Intercepções',                        # Interceções
             'Faltas'                              # Faltas
@@ -679,7 +675,7 @@ else:
             # Com bola
             'Perdas Totais',                      # Perdas de bola
             'Corridas seguidas',                  # Corridas Seguidas (com sucesso)
-            'Passes para o frente certos',        # Passes inteligentes / chave (com sucesso)
+            'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
             'Passes para terço final certos',   # Passes no último terço (com sucesso)
             'Passes para a grande área certos',   # Passes para a grande área (com sucesso)
             'Faltas sofridas',                    # Faltas Sofridas
@@ -689,7 +685,6 @@ else:
             'Assistências para remate',           # Assistência para remate na baliza
             'Assistências',                       # Assistências
             'Segundas assistências',              # Segunda assistência
-            'Assistências para remate',           # Assistência para remate
             'Remates à Baliza',                   # Remates (na baliza)
             'xA',                                 # xA
             'xG',                                 # xG
@@ -705,7 +700,7 @@ else:
         '🪂 Winger (Extremo)': [
             # Com bola
             'Corridas seguidas',                  # Corridas Seguidas (com sucesso)
-            'Passes para o frente certos',        # Passes inteligentes / chave (com sucesso)
+            'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
             'Passes para a grande área certos',   # Passes para a grande área (com sucesso)
             'Passes para terço final certos',   # Passes no último terço (com sucesso)
             'Faltas sofridas',                    # Faltas Sofridas
