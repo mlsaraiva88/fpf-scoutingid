@@ -62,11 +62,11 @@ else:
         try:
             df = pd.read_excel(uploaded_file)
 
-            if 'Ações totais' in df.columns:
-                metrics_start_col_index = df.columns.get_loc('Ações totais')
-                st.success(f"✅ Índice da coluna 'Ações totais': {metrics_start_col_index}")
+            if 'Ações Totais' in df.columns:
+                metrics_start_col_index = df.columns.get_loc('Ações Totais')
+                st.success(f"✅ Índice da coluna 'Ações Totais': {metrics_start_col_index}")
             else:
-                st.warning("⚠️ O ficheiro foi carregado, mas a coluna 'Ações totais' não foi encontrada.")
+                st.warning("⚠️ O ficheiro foi carregado, mas a coluna 'Ações Totais' não foi encontrada.")
         except Exception as e:
             st.error(f"❌ Erro ao ler o ficheiro: {e}")
     else:
@@ -337,7 +337,7 @@ else:
         # --- INTEGRAÇÃO NO CÓDIGO PRINCIPAL ---
         # Aplicar ponderações ao final_filtered_df se ativado
         if use_weights and not final_filtered_df.empty:
-            # Identificar colunas de métricas (a partir de 'Ações totais')
+            # Identificar colunas de métricas (a partir de 'Ações Totais')
             if metrics_start_col_index is not None:
                 metrics_to_weight = df.columns[metrics_start_col_index:].tolist()
                 
@@ -422,10 +422,10 @@ else:
         # Use pd.read_excel for .xlsx files
         df = pd.read_excel(file_path)
     
-        # Ensure numeric types for relevant columns starting from 'Ações totais'
-        # Find the index of 'Ações totais'
-        acoes_totais_col_index = df.columns.get_loc('Ações totais')
-        # Select all columns from 'Ações totais' onwards
+        # Ensure numeric types for relevant columns starting from 'Ações Totais'
+        # Find the index of 'Ações Totais'
+        acoes_totais_col_index = df.columns.get_loc('Ações Totais')
+        # Select all columns from 'Ações Totais' onwards
         numeric_cols = df.columns[acoes_totais_col_index:].tolist()
     
         for col in numeric_cols:
@@ -502,41 +502,60 @@ else:
         return "N/A"
 
     # --- Metric Categorization ---
-    # Identify columns from 'Ações totais' onwards
-    metrics_start_col_index = df.columns.get_loc('Ações totais')
+    # Identify columns from 'Ações Totais' onwards
+    metrics_start_col_index = df.columns.get_loc('Ações Totais')
     all_metrics_columns = df.columns[metrics_start_col_index:].tolist()
 
     # Define categories based on typical football metrics
     # These lists are based on common football metric groupings, you can adjust them.
     # CORRESPONDÊNCIA EXATA COM O EXCEL - ATENÇÃO ÀS MAIÚSCULAS/MINÚSCULAS
+
     offensive_metrics = [
-        'Golos', 'Assistências', 'Remates totais', 'Remates à baliza', 'xG',
-        'Dribles tentados', 'Dribles certos', 'Duelos ofensivos Totais', 'Duelos ofensivos ganhos',
-        'Toques na área', 'Assistências para remate', 'xA', 'Segundas assistências',
-        'Faltas sofridas'
+
+        'Golos', 'Assistências', 'Remates Totais', 'Remates à Baliza', 'xG',
+
+        'Dribles T', 'Dribles certos', 'Duelos ofensivos Totais', 'Duelos ofensivos ganhos',
+
+        'Toques na área', 'Assistências para remate', 'xA', 'Segundas assistências'
+
     ]
 
     defensive_metrics = [
-        'Intercepções', 'Recuperações totais', 'Recuperações meio campo adversário',
-        'Rasteiras', 'Rasteiras ganhas', 'Alívios', 'Duelos defensivos totais',
-        'Duelos defensivos ganhos', 'Faltas cometidas', 'Duelos de bola livre totais', 'Duelos de bola livre ganhos'
+
+        'Intercepções', 'Recuperações Totais', 'Recuperações Meio Campo Adversário',
+
+        'Carrinhos', 'Carrinhos Ganhos', 'Alívios', 'Duelos Defensivos Totais',
+
+        'Duelos Defensivos Ganhos', 'Faltas', 'Duelos de bola livre Totais', 'Duelos de bola livre Ganhos'
+
     ]
 
     passing_metrics = [
-        'Passes totais', 'Passes certos', 'Passes longos tentados', 'Passes longos certos',
-        'Cruzamentos tentados', 'Cruzamentos certos', 'Passes em profundidade totais',
-        'Passes em profundidade certos', 'xA', 'Segundas assistências', 'Passes para terço final totais',
+
+        'Passes Totais', 'Passes Totais Certos', 'Passes Longos T', 'Passes Longos Certos',
+
+        'Cruzamentos T', 'Cruzamentos Certos', 'Passes em profundidade totais',
+
+        'Passes em profundidade certos', 'Passes para terço final totais',
+
         'Passes para terço final certos', 'Passes para a grande área totais',
+
         'Passes para a grande área precisos', 'Passes recebidos',
+
         'Passes para a frente totais', 'Passes para a frente certos',
+
         'Passes para trás totais', 'Passes para trás certos'
+
     ]
 
     general_metrics = [
-        'Ações totais', 'Ações com sucesso', 'Perdas totais', 'Perdas meio campo',
-        'Duelos tentados', 'Duelos ganhos', 'Cartões amarelos', 'Cartões vermelhos',
-        'Foras de jogo', 'Corridas progressivas', 'Duelos de bola livre totais', 'Duelos de bola livre ganhos',
-        'Cartões amarelos', 'Cartões vermelhos'
+
+        'Ações Totais', 'Ações Sucesso', 'Perdas Totais', 'Perdas Meio Campo',
+
+        'Duelos T', 'Duelos Ganhos', 'Cartão amarelo', 'Cartão vermelho',
+
+        'Foras de jogo', 'Corridas seguidas','Faltas sofridas', 'Faltas'
+
     ]
 
     # Ensure all metrics are covered and no duplicates, and filter out any not in dataframe
@@ -567,25 +586,25 @@ else:
             'Passes em profundidade certos',       # Passes progressivos (com sucesso)
             'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
             'Passes para terço final certos',   # Passes para último terço (com sucesso)
-            'Passes longos certos',                # Passes longos (com sucesso)
+            'Passes Longos Certos',                # Passes longos (com sucesso)
             'Duelos ofensivos ganhos',             # Duelos ofensivos (com sucesso)
-            'Duelos de bola livre totais',       # Duelos aéreos ofensivos
+            'Duelos de bola livre Totais',       # Duelos aéreos ofensivos
             # Sem bola
-            'Rasteiras ganhas',                   # Desarmes (com sucesso)
-            'Duelos defensivos ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos defensivos ganhos',           # 1x1 defensivo (com sucesso)
-            'Duelos de bola livre ganhos',       # Duelos na pressão (com sucesso)
-            'Duelos de bola livre ganhos',       # Duelos aéreos (com sucesso)
+            'Carrinhos Ganhos',                   # Desarmes (com sucesso)
+            'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
+            'Duelos Defensivos Ganhos',           # 1x1 defensivo (com sucesso)
+            'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
+            'Duelos de bola livre Ganhos',       # Duelos aéreos (com sucesso)
             'Intercepções',                        # Interceções
-            'Recuperações meio campo adversário',  # Recuperações em meio-campo ofensivo (com sucesso)
-            'Faltas cometidas'                              # Faltas cometidas
+            'Recuperações Meio Campo Adversário',  # Recuperações em meio-campo ofensivo (com sucesso)
+            'Faltas'                              # Faltas
         ],
         '🛡️ Full-back (Lateral)': [
             # Com bola
             'Passes em profundidade certos',       # Passes progressivos (com sucesso)
             'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
             'Passes para terço final certos',   # Passes para último terço (com sucesso)
-            'Corridas progressivas',                  # Corridas progressivas (com sucesso)
+            'Corridas seguidas',                  # Corridas Seguidas (com sucesso)
             'Dribles certos',                     # Dribles (com sucesso)
             'Duelos ofensivos ganhos',            # Duelos ofensivos (com sucesso)
             'Toques na área',                     # Toques dentro da área
@@ -593,48 +612,48 @@ else:
             'Assistências',                       # Assistências
             'Segundas assistências',              # Segunda assistência
             'Assistências para remate',            # Assistência para remate
-            'Cruzamentos certos',                 # Cruzamentos (com sucesso)
-            'Remates à baliza',                   # Remates (na baliza)
+            'Cruzamentos Certos',                 # Cruzamentos (com sucesso)
+            'Remates à Baliza',                   # Remates (na baliza)
             'xG',                                 # xG
             # Sem bola
-            'Rasteiras ganhas',                   # Desarmes (com sucesso)
-            'Duelos defensivos ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos defensivos ganhos',           # 1x1 defensivo (com sucesso)
-            'Duelos de bola livre ganhos',       # Duelos na pressão (com sucesso)
-            'Duelos de bola livre ganhos',       # Duelos aéreos (com sucesso)
-            'Recuperações meio campo adversário', # Recuperações em meio-campo ofensivo
+            'Carrinhos Ganhos',                   # Desarmes (com sucesso)
+            'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
+            'Duelos Defensivos Ganhos',           # 1x1 defensivo (com sucesso)
+            'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
+            'Duelos de bola livre Ganhos',       # Duelos aéreos (com sucesso)
+            'Recuperações Meio Campo Adversário', # Recuperações em meio-campo ofensivo
             'Intercepções',                        # Interceções
-            'Faltas cometidas'                              # Faltas cometidas
+            'Faltas'                              # Faltas
         ],
         '🧲 Defensive Midfielder (Médio Defensivo)': [
             # Com bola
-            'Perdas totais',                      # Perdas de bola
-            'Passes certos',               # Passes (com sucesso)
+            'Perdas Totais',                      # Perdas de bola
+            'Passes Totais Certos',               # Passes (com sucesso)
             'Passes em profundidade certos',      # Passes progressivos (com sucesso)
             'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
-            'Passes longos certos',               # Passes longos (com sucesso)
+            'Passes Longos Certos',               # Passes longos (com sucesso)
             'Passes para terço final certos',   # Passes no último terço (com sucesso)
             'Duelos ofensivos ganhos',            # Duelos ofensivos (com sucesso)
             'Dribles certos',                     # Dribles (com sucesso)
             'Segundas assistências',              # Segunda assistência
             # Sem bola
-            'Recuperações meio campo adversário', # Recuperações de bola no meio-campo ofensivo
-            'Recuperações totais',                # Recuperações totais
-            'Rasteiras ganhas',                   # Desarmes (com sucesso)
-            'Duelos defensivos ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos de bola livre ganhos',       # Duelos na pressão (com sucesso)
-            'Duelos de bola livre ganhos',       # Duelos aéreos (com sucesso)
+            'Recuperações Meio Campo Adversário', # Recuperações de bola no meio-campo ofensivo
+            'Recuperações Totais',                # Recuperações Totais
+            'Carrinhos Ganhos',                   # Desarmes (com sucesso)
+            'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
+            'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
+            'Duelos de bola livre Ganhos',       # Duelos aéreos (com sucesso)
             'Intercepções',                        # Interceções
-            'Faltas cometidas'                              # Faltas cometidas por desarme
+            'Faltas'                              # Faltas por desarme
         ],
         '🧠 Central Midfielder (Médio Centro)': [
             # Com bola
-            'Perdas totais',                      # Perdas de bola
-            'Corridas progressivas',                  # Corridas progressivas
-            'Passes certos',               # Passes (com sucesso)
+            'Perdas Totais',                      # Perdas de bola
+            'Corridas seguidas',                  # Corridas Seguidas
+            'Passes Totais Certos',               # Passes (com sucesso)
             'Passes em profundidade certos',      # Passes progressivos (com sucesso)
             'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
-            'Passes longos certos',               # Passes longos (com sucesso)
+            'Passes Longos Certos',               # Passes longos (com sucesso)
             'Passes para terço final certos',   # Passes no último terço (com sucesso)
             'Duelos ofensivos ganhos',            # Duelos ofensivos (com sucesso)
             'Dribles certos',                     # Dribles (com sucesso)
@@ -642,28 +661,28 @@ else:
             'Segundas assistências',              # Segunda assistência
             'Assistências para remate',           # Assistência para remate
             'xA',                                 # xA
-            'Remates à baliza',                   # Remates (à baliza)
-            'Toques na área',                     # Toques na área
+            'Remates à Baliza',                   # Remates (à baliza)
+            'Toques na área',                     # Toques na Área
             'xG',                                 # xG
             'Golos',                              # Golos
             # Sem bola
-            'Recuperações meio campo adversário', # Recuperações de bola no meio-campo ofensivo
-            'Recuperações totais',                # Recuperações totais
-            'Rasteiras ganhas',                   # Desarmes (com sucesso)
-            'Duelos defensivos ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos de bola livre ganhos',       # Duelos na pressão (com sucesso)
-            'Duelos de bola livre ganhos',       # Duelos aéreo (com sucesso)
+            'Recuperações Meio Campo Adversário', # Recuperações de bola no meio-campo ofensivo
+            'Recuperações Totais',                # Recuperações Totais
+            'Carrinhos Ganhos',                   # Desarmes (com sucesso)
+            'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
+            'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
+            'Duelos de bola livre Ganhos',       # Duelos aéreo (com sucesso)
             'Intercepções',                        # Interceções
-            'Faltas cometidas'                              # Faltas cometidas por desarme
+            'Faltas'                              # Faltas por desarme
         ],
         '🎯 Attacking Midfielder (Médio Ofensivo)': [
             # Com bola
-            'Perdas totais',                      # Perdas de bola
-            'Corridas progressivas',                  # Corridas progressivas (com sucesso)
-            'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
+            'Perdas Totais',                      # Perdas de bola
+            'Corridas seguidas',                  # Corridas Seguidas (com sucesso)
+            'Passes para o frente certos',        # Passes inteligentes / chave (com sucesso)
             'Passes para terço final certos',   # Passes no último terço (com sucesso)
-            'Passes para a grande área precisos',   # Passes para a grande área (com sucesso)
-            'Faltas sofridas',                    # Faltas sofridas
+            'Passes para a grande área certos',   # Passes para a grande área (com sucesso)
+            'Faltas sofridas',                    # Faltas Sofridas
             'Duelos ofensivos ganhos',            # Duelos ofensivos (com sucesso)
             'Dribles certos',                     # Dribles (com sucesso)
             'Toques na área',                     # Toques dentro da área
@@ -671,67 +690,67 @@ else:
             'Assistências',                       # Assistências
             'Segundas assistências',              # Segunda assistência
             'Assistências para remate',           # Assistência para remate
-            'Remates à baliza',                   # Remates (na baliza)
+            'Remates à Baliza',                   # Remates (na baliza)
             'xA',                                 # xA
             'xG',                                 # xG
             'Golos',                              # Golos
             # Sem bola
-            'Recuperações meio campo adversário', # Recuperações de bola no meio-campo ofensivo
-            'Recuperações totais',                # Recuperações totais
-            'Duelos defensivos ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos de bola livre ganhos',       # Duelos na pressão (com sucesso)
+            'Recuperações Meio Campo Adversário', # Recuperações de bola no meio-campo ofensivo
+            'Recuperações Totais',                # Recuperações Totais
+            'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
+            'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
             'Intercepções',                        # Interceções
-            'Faltas cometidas'                              # Faltas cometidas
+            'Faltas'                              # Faltas
         ],
         '🪂 Winger (Extremo)': [
             # Com bola
-            'Corridas progressivas',                  # Corridas progressivas (com sucesso)
-            'Passes para a frente certos',        # Passes inteligentes / chave (com sucesso)
-            'Passes para a grande área precisos',   # Passes para a grande área (com sucesso)
+            'Corridas seguidas',                  # Corridas Seguidas (com sucesso)
+            'Passes para o frente certos',        # Passes inteligentes / chave (com sucesso)
+            'Passes para a grande área certos',   # Passes para a grande área (com sucesso)
             'Passes para terço final certos',   # Passes no último terço (com sucesso)
-            'Faltas sofridas',                    # Faltas sofridas
+            'Faltas sofridas',                    # Faltas Sofridas
             'Duelos ofensivos ganhos',            # Duelos ofensivos (com sucesso)
             'Dribles certos',                     # Dribles (com sucesso)
             'Toques na área',                     # Toques dentro da área
             'Assistências para remate',           # Assistência para remate na baliza
             'Assistências',                       # Assistências
-            'Cruzamentos certos',                 # Cruzamentos (com sucesso)
+            'Cruzamentos Certos',                 # Cruzamentos (com sucesso)
             'Segundas assistências',              # Segunda assistência
             'Assistências para remate',           # Assistência para remate
-            'Remates à baliza',                   # Remates (na baliza)
+            'Remates à Baliza',                   # Remates (na baliza)
             'xA',                                 # xA
             'xG',                                 # xG
             'Golos',                              # Golos
             # Sem bola
-            'Recuperações meio campo adversário', # Recuperações de bola no meio-campo ofensivo
-            'Recuperações totais',                # Recuperações totais
-            'Duelos defensivos ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos de bola livre ganhos',       # Duelos na pressão (com sucesso)
+            'Recuperações Meio Campo Adversário', # Recuperações de bola no meio-campo ofensivo
+            'Recuperações Totais',                # Recuperações Totais
+            'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
+            'Duelos de bola livre Ganhos',       # Duelos na pressão (com sucesso)
             'Intercepções',                        # Interceções
-            'Faltas cometidas'                              # Faltas cometidas
+            'Faltas'                              # Faltas
         ],
         '🎯 Striker (Avançado)': [
             # Com bola
-            'Passes certos',               # Passes (com sucesso)
-            'Corridas progressivas',                  # Corridas progressivas
-            'Faltas sofridas',                    # Faltas sofridas
+            'Passes Totais Certos',               # Passes (com sucesso)
+            'Corridas seguidas',                  # Corridas Seguidas
+            'Faltas Sofridas',                    # Faltas Sofridas
             'Duelos ofensivos ganhos',            # Duelos ofensivos (com sucesso)
             'Toques na área',                     # Toques dentro da área
             'Assistências para remate',           # Assistência para remate na baliza
             'Assistências',                       # Assistências
             'Assistências para remate',           # Assistência para remate
-            'Remates à baliza',                   # Remates (na baliza)
-            'Duelos de bola livre totais',       # Duelos aéreos ofensivos
+            'Remates à Baliza',                   # Remates (na baliza)
+            'Duelos de bola livre Totais',       # Duelos aéreos ofensivos
             'xA',                                 # xA
             'xG',                                 # xG
             'Golos',                              # Golos
             # Sem bola
-            'Recuperações meio campo adversário', # Recuperações de bola no meio-campo ofensivo
-            'Recuperações totais',                # Recuperações totais
-            'Duelos defensivos ganhos',           # Duelos defensivos (com sucesso)
-            'Duelos de bola livre ganhos',      # Duelos na pressão (com sucesso)
+            'Recuperações Meio Campo Adversário', # Recuperações de bola no meio-campo ofensivo
+            'Recuperações Totais',                # Recuperações Totais
+            'Duelos Defensivos Ganhos',           # Duelos defensivos (com sucesso)
+            'Duelos de bola livre Ganhos',      # Duelos na pressão (com sucesso)
             'Intercepções',                        # Interceções
-            'Faltas cometidas'                              # Faltas cometidas
+            'Faltas'                              # Faltas
         ]
     }
 
@@ -773,7 +792,7 @@ else:
                         'Assistências Totais (Nesta Posição)': 0.0,
                         'Média xG (Nesta Posição)': 0.0,
                         'Média xA (Nesta Posição)': 0.0,
-                        'Ações totais (Nesta Posição)': 0.0
+                        'Ações Totais (Nesta Posição)': 0.0
                     }
                     general_info_data_rows.append(row_data)
                 else:
@@ -786,7 +805,7 @@ else:
                         total_assists_pos = player_club_position_df['Assistências'].sum() if 'Assistências' in player_club_position_df.columns else 0
                         avg_xg_pos = player_club_position_df['xG'].mean() if 'xG' in player_club_position_df.columns else 0
                         avg_xa_pos = player_club_position_df['xA'].mean() if 'xA' in player_club_position_df.columns else 0
-                        total_actions_pos = player_club_position_df['Ações totais'].sum() if 'Ações totais' in player_club_position_df.columns else 0
+                        total_actions_pos = player_club_position_df['Ações Totais'].sum() if 'Ações Totais' in player_club_position_df.columns else 0
 
                         row_data = {
                             'Jogador': player,
@@ -797,7 +816,7 @@ else:
                             'Assistências Totais (Nesta Posição)': total_assists_pos,
                             'Média xG (Nesta Posição)': avg_xg_pos,
                             'Média xA (Nesta Posição)': avg_xa_pos,
-                            'Ações totais (Nesta Posição)': total_actions_pos
+                            'Ações Totais (Nesta Posição)': total_actions_pos
                         }
                         general_info_data_rows.append(row_data)
 
@@ -807,7 +826,7 @@ else:
         numeric_cols_for_info_table = [
             'Minutos Totais (Nesta Posição)', 'Golos Totais (Nesta Posição)', 
             'Assistências Totais (Nesta Posição)', 'Média xG (Nesta Posição)', 
-            'Média xA (Nesta Posição)', 'Ações totais (Nesta Posição)'
+            'Média xA (Nesta Posição)', 'Ações Totais (Nesta Posição)'
         ]
         for col in numeric_cols_for_info_table:
             df_general_info[col] = pd.to_numeric(df_general_info[col], errors='coerce').fillna(0)
@@ -825,7 +844,7 @@ else:
             'Assistências Totais (Nesta Posição)': "{:.0f}",
             'Média xG (Nesta Posição)': "{:.2f}",
             'Média xA (Nesta Posição)': "{:.2f}",
-            'Ações totais (Nesta Posição)': "{:.0f}"
+            'Ações Totais (Nesta Posição)': "{:.0f}"
         })
 
         # Display the styled DataFrame
@@ -3125,47 +3144,47 @@ else:
                 {
                     "Ofensivos": [],
                     "Defensivos": ["Defesas Totais", "% Defesas", "xG Evitado", "Saídas a Cruzamentos Ganhas"],
-                    "Passe": ["Passes Curtos Certos", "Passes longos certos"],
+                    "Passe": ["Passes Curtos Certos", "Passes Longos Certos"],
                     "Geral": []
                 },
                 {
                     "Ofensivos": [],
-                    "Defensivos": ["Duelos defensivos ganhos", "Duelos Aéreos Ganhos", "Intercepções", "Alívios", "Rasteiras ganhas"],
-                    "Passe": ["Passes certos", "Passes Progressivos Certos"],
-                    "Geral": ["Perdas totais"]
+                    "Defensivos": ["Duelos Defensivos Ganhos", "Duelos Aéreos Ganhos", "Intercepções", "Alívios", "Carrinhos ganhas"],
+                    "Passe": ["Passes Totais Certos", "Passes Progressivos Certos"],
+                    "Geral": ["Perdas Totais"]
                 },
                 {
-                    "Ofensivos": ["Corridas Seguidas", "Cruzamentos certos", "Assistências", "Assistências para Remate", "Dribles certos", "Toques na Área"],
-                    "Defensivos": ["Duelos defensivos ganhos", "Intercepções"],
+                    "Ofensivos": ["Corridas Seguidas", "Cruzamentos Certos", "Assistências", "Assistências para Remate", "Dribles Certos", "Toques na Área"],
+                    "Defensivos": ["Duelos Defensivos Ganhos", "Intercepções"],
                     "Passe": ["Passes Progressivos"],
                     "Geral": []
                 },
                 {
                     "Ofensivos": [],
-                    "Defensivos": ["Recuperações", "Intercepções", "Duelos defensivos ganhos", "Duelos de Bola Livre Ganhos"],
-                    "Passe": ["Passes certos", "Passes Progressivos Certos", "Passes Verticais Certos", "Assistências para Remate"],
+                    "Defensivos": ["Recuperações", "Intercepções", "Duelos Defensivos Ganhos", "Duelos de Bola Livre Ganhos"],
+                    "Passe": ["Passes Totais Certos", "Passes Progressivos Certos", "Passes Verticais Certos", "Assistências para Remate"],
                     "Geral": []
                 },
                 {
-                    "Ofensivos": ["Remates à baliza", "Golos", "Duelos Ofensivos Ganhos"],
+                    "Ofensivos": ["Remates à Baliza", "Golos", "Duelos Ofensivos Ganhos"],
                     "Defensivos": ["Recuperação no Meio Campo Adversário"],
                     "Passe": ["Passes Progressivos Certos", "Passes Último Terço", "Assistências", "Segundas Assistências"],
                     "Geral": []
                 },
                 {
-                    "Ofensivos": ["Dribles certos", "Remates totais", "Remates à baliza", "xA", "xG", "Toques na Área", "Recuperações Altas", "Duelos Ofensivos Ganhos"],
+                    "Ofensivos": ["Dribles Certos", "Remates Totais", "Remates à Baliza", "xA", "xG", "Toques na Área", "Recuperações Altas", "Duelos Ofensivos Ganhos"],
                     "Defensivos": [],
                     "Passe": ["Assistências", "Assistências para Remate", "Passes Progressivos Certos"],
                     "Geral": []
                 },
                 {
-                    "Ofensivos": ["Dribles certos", "Cruzamentos certos", "Assistências", "Assistências para Remate", "Golos", "Remates à baliza", "xA", "xG", "Corridas Seguidas", "Toques na Área", "Duelos Ofensivos Ganhos", "Recuperações Altas"],
+                    "Ofensivos": ["Dribles Certos", "Cruzamentos Certos", "Assistências", "Assistências para Remate", "Golos", "Remates à Baliza", "xA", "xG", "Corridas Seguidas", "Toques na Área", "Duelos Ofensivos Ganhos", "Recuperações Altas"],
                     "Defensivos": [],
                     "Passe": [],
                     "Geral": []
                 },
                 {
-                    "Ofensivos": ["Golos", "xG", "Remates totais", "Remates à baliza", "Toques na Área", "Recuperações Altas", "Duelos Ofensivos Ganhos"],
+                    "Ofensivos": ["Golos", "xG", "Remates Totais", "Remates à Baliza", "Toques na Área", "Recuperações Altas", "Duelos Ofensivos Ganhos"],
                     "Defensivos": ["Duelos Aéreos Ganhos"],
                     "Passe": ["Assistências", "Assistências para Remate", "Passes Progressivos"],
                     "Geral": []
@@ -3487,7 +3506,7 @@ else:
         def categorize_metric(metric_name):
             """Categoriza uma métrica com base no seu nome."""
             offensive_keywords = ['Golos', 'Assistências', 'Remates', 'Dribles', 'Cruzamentos', 'Toques na área', 'xG', 'xA']
-            defensive_keywords = ['Desarmes', 'Intercepções', 'Bloqueios', 'Rasteiras', 'Alívios', 'Duelos Defensivos', 'Recuperações']
+            defensive_keywords = ['Desarmes', 'Intercepções', 'Bloqueios', 'Carrinhos', 'Alívios', 'Duelos Defensivos', 'Recuperações']
             passing_keywords = ['Passes', 'Progressivos', 'Chave', 'Longos', 'profundidade', 'terço final']
             
             metric_lower = metric_name.lower()
@@ -4064,16 +4083,16 @@ else:
             metrics['defensiva'] = {
                 'total_intercecoes': safe_calc(lambda: player_data['Intercepções'].sum()) if 'Intercepções' in player_data.columns else 0,
                 'media_intercecoes': safe_calc(lambda: player_data['Intercepções'].mean()) if 'Intercepções' in player_data.columns else 0,
-                'total_recuperacoes': safe_calc(lambda: player_data['Recuperações totais'].sum()) if 'Recuperações totais' in player_data.columns else 0,
-                'media_recuperacoes': safe_calc(lambda: player_data['Recuperações totais'].mean()) if 'Recuperações totais' in player_data.columns else 0,
-                'total_duelos_def': safe_calc(lambda: player_data['Duelos defensivos ganhos'].sum()) if 'Duelos defensivos ganhos' in player_data.columns else 0,
-                'media_duelos_def': safe_calc(lambda: player_data['Duelos defensivos ganhos'].mean()) if 'Duelos defensivos ganhos' in player_data.columns else 0
+                'total_recuperacoes': safe_calc(lambda: player_data['Recuperações Totais'].sum()) if 'Recuperações Totais' in player_data.columns else 0,
+                'media_recuperacoes': safe_calc(lambda: player_data['Recuperações Totais'].mean()) if 'Recuperações Totais' in player_data.columns else 0,
+                'total_duelos_def': safe_calc(lambda: player_data['Duelos Defensivos Ganhos'].sum()) if 'Duelos Defensivos Ganhos' in player_data.columns else 0,
+                'media_duelos_def': safe_calc(lambda: player_data['Duelos Defensivos Ganhos'].mean()) if 'Duelos Defensivos Ganhos' in player_data.columns else 0
             }
             
             # Métricas de Passe
             metrics['passe'] = {
-                'total_passes': safe_calc(lambda: player_data['Passes certos'].sum()) if 'Passes certos' in player_data.columns else 0,
-                'media_passes': safe_calc(lambda: player_data['Passes certos'].mean()) if 'Passes certos' in player_data.columns else 0,
+                'total_passes': safe_calc(lambda: player_data['Passes Totais Certos'].sum()) if 'Passes Totais Certos' in player_data.columns else 0,
+                'media_passes': safe_calc(lambda: player_data['Passes Totais Certos'].mean()) if 'Passes Totais Certos' in player_data.columns else 0,
                 'total_passesseg': safe_calc(lambda: player_data['Passes Progressivos Certos'].sum()) if 'Passes Progressivos Certos' in player_data.columns else 0,
                 'media_passesseg': safe_calc(lambda: player_data['Passes Progressivos Certos'].mean()) if 'Passes Progressivos Certos' in player_data.columns else 0
             }
@@ -4082,18 +4101,18 @@ else:
             metrics['geral'] = {
                 'total_minutos': safe_calc(lambda: player_data['Minutos'].sum()),
                 'media_minutos': safe_calc(lambda: player_data['Minutos'].mean()),
-                'total_accoes': safe_calc(lambda: player_data['Ações totais'].sum()) if 'Ações totais' in player_data.columns else 0,
-                'media_accoes': safe_calc(lambda: player_data['Ações totais'].mean()) if 'Ações totais' in player_data.columns else 0,
-                'total_acao_sucesso': safe_calc(lambda: player_data['Ações com sucesso'].sum()) if 'Ações com sucesso' in player_data.columns else 0,
-                'media_acao_sucesso': safe_calc(lambda: player_data['Ações com sucesso'].mean()) if 'Ações com sucesso' in player_data.columns else 0
+                'total_accoes': safe_calc(lambda: player_data['Ações Totais'].sum()) if 'Ações Totais' in player_data.columns else 0,
+                'media_accoes': safe_calc(lambda: player_data['Ações Totais'].mean()) if 'Ações Totais' in player_data.columns else 0,
+                'total_acao_sucesso': safe_calc(lambda: player_data['Ações Sucesso'].sum()) if 'Ações Sucesso' in player_data.columns else 0,
+                'media_acao_sucesso': safe_calc(lambda: player_data['Ações Sucesso'].mean()) if 'Ações Sucesso' in player_data.columns else 0
             }
             
             # Disciplina
             metrics['disciplina'] = {
-                'total_amarelos': safe_calc(lambda: player_data['Cartões amarelos'].sum()) if 'Cartões amarelos' in player_data.columns else 0,
-                'media_amarelos': safe_calc(lambda: player_data['Cartões amarelos'].mean()) if 'Cartões amarelos' in player_data.columns else 0,
-                'total_vermelhos': safe_calc(lambda: player_data['Cartões vermelhos'].sum()) if 'Cartões vermelhos' in player_data.columns else 0,
-                'media_vermelhos': safe_calc(lambda: player_data['Cartões vermelhos'].mean()) if 'Cartões vermelhos' in player_data.columns else 0
+                'total_amarelos': safe_calc(lambda: player_data['Cartões Amarelos'].sum()) if 'Cartões Amarelos' in player_data.columns else 0,
+                'media_amarelos': safe_calc(lambda: player_data['Cartões Amarelos'].mean()) if 'Cartões Amarelos' in player_data.columns else 0,
+                'total_vermelhos': safe_calc(lambda: player_data['Cartões Vermelhos'].sum()) if 'Cartões Vermelhos' in player_data.columns else 0,
+                'media_vermelhos': safe_calc(lambda: player_data['Cartões Vermelhos'].mean()) if 'Cartões Vermelhos' in player_data.columns else 0
             }
             
             return metrics
@@ -4458,8 +4477,8 @@ else:
                     score += row['Assistências'] * 8
                 if 'xG' in row.index:
                     score += row['xG'] * 5
-                if 'Ações com sucesso' in row.index:
-                    score += row['Ações com sucesso'] * 0.1
+                if 'Ações Sucesso' in row.index:
+                    score += row['Ações Sucesso'] * 0.1
                 return score
             
             player_df['game_score'] = player_df.apply(calculate_game_score, axis=1)
@@ -4499,8 +4518,8 @@ else:
             with col2:
                 st.markdown("**📈 Métricas Avançadas:**")
                 st.write(f"🎪 xA: {melhor_jogo.get('xA', 0):.2f}")
-                st.write(f"⚡ Ações: {melhor_jogo.get('Ações totais', 0):.0f}")
-                st.write(f"✅ Sucesso: {melhor_jogo.get('Ações com sucesso', 0):.0f}")
+                st.write(f"⚡ Ações: {melhor_jogo.get('Ações Totais', 0):.0f}")
+                st.write(f"✅ Sucesso: {melhor_jogo.get('Ações Sucesso', 0):.0f}")
             with col3:
                 st.markdown("**📍 Contexto:**")
                 st.write(f"📍 Posição: {melhor_jogo.get('Posição', 'N/A')}")
@@ -4574,14 +4593,14 @@ else:
                     avg_def = historical_data['Intercepções'].mean()
                     defensiva_improvement = ((recent_def - avg_def) / (avg_def + 0.1)) * 100
                 
-                if passe_improvement == 0 and 'Passes certos' in recent_game.index and 'Passes certos' in historical_data.columns:
-                    recent_pass = recent_game['Passes certos']
-                    avg_pass = historical_data['Passes certos'].mean()
+                if passe_improvement == 0 and 'Passes Totais Certos' in recent_game.index and 'Passes Totais Certos' in historical_data.columns:
+                    recent_pass = recent_game['Passes Totais Certos']
+                    avg_pass = historical_data['Passes Totais Certos'].mean()
                     passe_improvement = ((recent_pass - avg_pass) / (avg_pass + 0.1)) * 100
                 
-                if geral_improvement == 0 and 'Ações totais' in recent_game.index and 'Ações totais' in historical_data.columns:
-                    recent_actions = recent_game['Ações totais']
-                    avg_actions = historical_data['Ações totais'].mean()
+                if geral_improvement == 0 and 'Ações Totais' in recent_game.index and 'Ações Totais' in historical_data.columns:
+                    recent_actions = recent_game['Ações Totais']
+                    avg_actions = historical_data['Ações Totais'].mean()
                     geral_improvement = ((recent_actions - avg_actions) / (avg_actions + 0.1)) * 100
                 
                 # Extrair clube - usar os últimos 5 jogos para encontrar o mais frequente
