@@ -130,27 +130,27 @@ else:
         # Dicionário com as ponderações sugeridas
         default_competition_weights = {
             # Ligas Top
-            'England. Premier League': 2.0,
-            'Italy. Serie A': 1.8,
-            'France. Ligue 1': 1.7,
+            'England. Premier League': 2.6,
+            'Italy. Serie A': 2.3,
+            'France. Ligue 1': 2.1,
             'Netherlands. Eredivisie': 1.6,
-            'England. Championship': 1.5,
+            'England. Championship': 1.8,
             'Germany. 2. Bundesliga': 1.4,
-            'Saudi Arabia. Pro League': 1.4,
+            'Saudi Arabia. Pro League': 1.6,
             'Qatar. Qatar Stars League': 1.3,
             'Portugal. Segunda Liga': 1.2,
-            'Portugal. Liga 3': 1.0,
+            'Portugal. Liga 3': 1.1,
             'Portugal. Liga Revelação Sub 23': 0.9,
             
             # Competições Europeias de Clubes
-            'Europe. UEFA Champions League': 3.0,
-            'Europe. UEFA Europa League - Qualification': 2.0,
-            'Europe. UEFA Youth League': 1.5,
+            'Europe. UEFA Champions League': 2.7,
+            'Europe. UEFA Europa League - Qualification': 2.1,
+            'Europe. UEFA Youth League': 1.2,
             
             # Competições de Seleções
-            'Europe. UEFA U21 Championship Qualification': 2.5,
+            'Europe. UEFA U21 Championship Qualification': 1.6,
             'World. U21 National Team Friendlies': 1.8,
-            'Europe. U20 Elite League': 1.7,
+            'Europe. U20 Elite League': 1.3,
             'World. U19 National Team Friendlies': 1.6,
             
             # Taças
