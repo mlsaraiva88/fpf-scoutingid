@@ -550,7 +550,7 @@ else:
 
     general_metrics = [
 
-        'Ações Totais', 'Ações Sucesso', 'Perdas Totais', 'Perdas Meio Campo', 'Duelos Aéreos Totais', 'Duelos Aéreos Ganhos'
+        'Ações Totais', 'Ações Sucesso', 'Perdas Totais', 'Perdas Meio Campo', 'Duelos Aéreos Totais', 'Duelos Aéreos Ganhos',
 
         'Duelos Totais', 'Duelos Ganhos', 'Cartão Amarelo', 'Cartão Vermelho',
 
